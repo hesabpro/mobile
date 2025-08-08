@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 final getIt = GetIt.instance;
 

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:school_app/core/helpers/sizer/adaptive_sizer.dart';
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/core/helpers/sizer/adaptive_sizer.dart';
+import 'package:hesab/imports_bindings.dart';
 
 ///*
 extension ResponsiveSizeExt on num {

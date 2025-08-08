@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 class CreateDialog extends StatelessWidget {
   const CreateDialog({

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key, this.radius = 16});

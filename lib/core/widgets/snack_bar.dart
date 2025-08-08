@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 void showSnackBar(BuildContext context, String msg) {
   final overlay = Overlay.of(context);

@@ -1,5 +1,5 @@
-import 'package:school_app/bootstrap.dart';
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/bootstrap.dart';
+import 'package:hesab/imports_bindings.dart';
 
 void main() {
   bootstrap(() => const App());

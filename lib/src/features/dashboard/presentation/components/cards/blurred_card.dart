@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 class BlurredCard extends StatelessWidget {
   const BlurredCard({

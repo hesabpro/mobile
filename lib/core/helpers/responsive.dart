@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 /// Breakpoints for responsive design based on screen width.
 const int _smallScreenSize = 500;

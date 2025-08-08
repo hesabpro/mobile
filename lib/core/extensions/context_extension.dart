@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 import 'package:flutter/material.dart';
 
 ///* This extension methords reduces

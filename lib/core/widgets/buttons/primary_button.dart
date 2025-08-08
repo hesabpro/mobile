@@ -1,5 +1,5 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 class Button extends StatelessWidget {
   const Button({

@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 part 'app_cubit.freezed.dart';
 part 'app_state.dart';

@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 /// bootstraping
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {

@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 // Assuming `imports_bindings.dart` contains `kDebugMode`
 import 'dart:developer' as dev;
 

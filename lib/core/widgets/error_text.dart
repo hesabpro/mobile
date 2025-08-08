@@ -1,4 +1,4 @@
-import 'package:school_app/imports_bindings.dart';
+import 'package:hesab/imports_bindings.dart';
 
 class ErrorText extends StatelessWidget {
   const ErrorText(this.msg, {super.key});
