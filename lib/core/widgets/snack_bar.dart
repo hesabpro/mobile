@@ -35,10 +35,9 @@ void showSnackBar(BuildContext context, String msg, {SnackBarType type = SnackBa
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: type.color.withAlpha(100),
-                    width: .5,
                   ),
                   color: type.color.withAlpha(25),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.zero,
                 ),
                 child: Text(
                   msg,
