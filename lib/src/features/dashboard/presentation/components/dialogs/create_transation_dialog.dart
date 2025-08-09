@@ -153,9 +153,7 @@ class _CreateTransationDialogState extends State<CreateTransationDialog> {
               ),
               child: Text(
                 _selectedDate != null ? DateFormat('dd MMMM yyyy').format(_selectedDate!) : 'No date selected',
-                style: TextStyle(
-                  color: _selectedDate != null ? Theme.of(context).textTheme.bodyLarge?.color : Colors.grey,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: _selectedDate != null ? null : Colors.grey),
               ),
             ),
           ),
