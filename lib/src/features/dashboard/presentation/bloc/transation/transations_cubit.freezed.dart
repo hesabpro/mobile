@@ -19,6 +19,9 @@ mixin _$TransationsState {
   DateTime get selectedDate => throw _privateConstructorUsedError;
   Option<Either<AppError, Map<String, TransationEntity>>> get transations =>
       throw _privateConstructorUsedError;
+  double get totalIncome => throw _privateConstructorUsedError;
+  double get totalExpense => throw _privateConstructorUsedError;
+  double get totalBalance => throw _privateConstructorUsedError;
 
   /// Create a copy of TransationsState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +38,10 @@ abstract class $TransationsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime selectedDate,
-      Option<Either<AppError, Map<String, TransationEntity>>> transations});
+      Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      double totalIncome,
+      double totalExpense,
+      double totalBalance});
 }
 
 /// @nodoc
@@ -55,6 +61,9 @@ class _$TransationsStateCopyWithImpl<$Res, $Val extends TransationsState>
   $Res call({
     Object? selectedDate = null,
     Object? transations = null,
+    Object? totalIncome = null,
+    Object? totalExpense = null,
+    Object? totalBalance = null,
   }) {
     return _then(_value.copyWith(
       selectedDate: null == selectedDate
@@ -65,6 +74,18 @@ class _$TransationsStateCopyWithImpl<$Res, $Val extends TransationsState>
           ? _value.transations
           : transations // ignore: cast_nullable_to_non_nullable
               as Option<Either<AppError, Map<String, TransationEntity>>>,
+      totalIncome: null == totalIncome
+          ? _value.totalIncome
+          : totalIncome // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalExpense: null == totalExpense
+          ? _value.totalExpense
+          : totalExpense // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalBalance: null == totalBalance
+          ? _value.totalBalance
+          : totalBalance // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -79,7 +100,10 @@ abstract class _$$TransationsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime selectedDate,
-      Option<Either<AppError, Map<String, TransationEntity>>> transations});
+      Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      double totalIncome,
+      double totalExpense,
+      double totalBalance});
 }
 
 /// @nodoc
@@ -97,6 +121,9 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? selectedDate = null,
     Object? transations = null,
+    Object? totalIncome = null,
+    Object? totalExpense = null,
+    Object? totalBalance = null,
   }) {
     return _then(_$TransationsStateImpl(
       selectedDate: null == selectedDate
@@ -107,6 +134,18 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
           ? _value.transations
           : transations // ignore: cast_nullable_to_non_nullable
               as Option<Either<AppError, Map<String, TransationEntity>>>,
+      totalIncome: null == totalIncome
+          ? _value.totalIncome
+          : totalIncome // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalExpense: null == totalExpense
+          ? _value.totalExpense
+          : totalExpense // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalBalance: null == totalBalance
+          ? _value.totalBalance
+          : totalBalance // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -115,17 +154,30 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
 
 class _$TransationsStateImpl implements _TransationsState {
   const _$TransationsStateImpl(
-      {required this.selectedDate, this.transations = const None()});
+      {required this.selectedDate,
+      this.transations = const None(),
+      this.totalIncome = 0,
+      this.totalExpense = 0,
+      this.totalBalance = 0});
 
   @override
   final DateTime selectedDate;
   @override
   @JsonKey()
   final Option<Either<AppError, Map<String, TransationEntity>>> transations;
+  @override
+  @JsonKey()
+  final double totalIncome;
+  @override
+  @JsonKey()
+  final double totalExpense;
+  @override
+  @JsonKey()
+  final double totalBalance;
 
   @override
   String toString() {
-    return 'TransationsState(selectedDate: $selectedDate, transations: $transations)';
+    return 'TransationsState(selectedDate: $selectedDate, transations: $transations, totalIncome: $totalIncome, totalExpense: $totalExpense, totalBalance: $totalBalance)';
   }
 
   @override
@@ -136,11 +188,18 @@ class _$TransationsStateImpl implements _TransationsState {
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
             (identical(other.transations, transations) ||
-                other.transations == transations));
+                other.transations == transations) &&
+            (identical(other.totalIncome, totalIncome) ||
+                other.totalIncome == totalIncome) &&
+            (identical(other.totalExpense, totalExpense) ||
+                other.totalExpense == totalExpense) &&
+            (identical(other.totalBalance, totalBalance) ||
+                other.totalBalance == totalBalance));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedDate, transations);
+  int get hashCode => Object.hash(runtimeType, selectedDate, transations,
+      totalIncome, totalExpense, totalBalance);
 
   /// Create a copy of TransationsState
   /// with the given fields replaced by the non-null parameter values.
@@ -155,13 +214,21 @@ class _$TransationsStateImpl implements _TransationsState {
 abstract class _TransationsState implements TransationsState {
   const factory _TransationsState(
       {required final DateTime selectedDate,
-      final Option<Either<AppError, Map<String, TransationEntity>>>
-          transations}) = _$TransationsStateImpl;
+      final Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      final double totalIncome,
+      final double totalExpense,
+      final double totalBalance}) = _$TransationsStateImpl;
 
   @override
   DateTime get selectedDate;
   @override
   Option<Either<AppError, Map<String, TransationEntity>>> get transations;
+  @override
+  double get totalIncome;
+  @override
+  double get totalExpense;
+  @override
+  double get totalBalance;
 
   /// Create a copy of TransationsState
   /// with the given fields replaced by the non-null parameter values.

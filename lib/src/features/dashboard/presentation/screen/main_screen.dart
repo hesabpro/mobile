@@ -16,12 +16,13 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransationsCubit, TransationsState>(
-      builder: (context, state) {
-        return Scaffold(
-          extendBody: true,
-          extendBodyBehindAppBar: true,
-          body: SafeArea(
+    return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: BlocBuilder<TransationsCubit, TransationsState>(
+        buildWhen: (previous, current) => previous.transations != current.transations,
+        builder: (context, state) {
+          return SafeArea(
             child: state.transations.fold(
               () => const Center(child: CircularProgressIndicator()),
               (t) => t.fold(
@@ -30,10 +31,6 @@ class _MainScreenState extends State<MainScreen> {
                   if (r.isEmpty) {
                     return const Center(child: Text('No transations found'));
                   }
-                  final values = r.values.toList();
-                  final totalIncome = values.where((t) => t.type == TransationType.income).fold<double>(0, (sum, t) => sum + t.amount);
-                  final totalExpense = values.where((t) => t.type == TransationType.expense).fold<double>(0, (sum, t) => sum + t.amount);
-                  final balance = totalIncome - totalExpense;
                   return RefreshIndicator.adaptive(
                     onRefresh: context.read<TransationsCubit>().fetchTransations,
                     child: CustomScrollView(
@@ -53,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      '+${totalIncome.toStringAsFixed(2)}',
+                                      '+${state.totalIncome.toStringAsFixed(2)}',
                                       style: const TextStyle(
                                         color: Colors.green,
                                         fontWeight: FontWeight.bold,
@@ -76,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      '-${totalExpense.toStringAsFixed(2)}',
+                                      '-${state.totalExpense.toStringAsFixed(2)}',
                                       style: const TextStyle(
                                         color: Colors.red,
                                         fontWeight: FontWeight.bold,
@@ -99,9 +96,9 @@ class _MainScreenState extends State<MainScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      balance.toStringAsFixed(2),
+                                      state.totalBalance.toStringAsFixed(2),
                                       style: TextStyle(
-                                        color: balance >= 0 ? Colors.green : Colors.red,
+                                        color: state.totalBalance >= 0 ? Colors.green : Colors.red,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                       ),
@@ -131,13 +128,18 @@ class _MainScreenState extends State<MainScreen> {
                 },
               ),
             ),
-          ),
-          bottomNavigationBar: BlurredCard(
-            borderRadius: BorderRadius.zero,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
+          );
+        },
+      ),
+      bottomNavigationBar: BlurredCard(
+        borderRadius: BorderRadius.zero,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BlocBuilder<TransationsCubit, TransationsState>(
+              buildWhen: (previous, current) => previous.selectedDate != current.selectedDate,
+              builder: (context, state) {
+                return InkWell(
                   onTap: () async {
                     final now = DateTime.now();
                     final picked = await showDatePicker(
@@ -163,40 +165,40 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
+                );
+              },
+            ),
+            // InkWell(
+            //   onTap: () {},
+            //   child: Container(
+            //     padding: const EdgeInsets.all(12),
+            //     decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+            //     child: Text(
+            //       'Categories',
+            //       style: TextStyle(
+            //         color: Theme.of(context).colorScheme.onPrimary,
+            //         fontSize: 14,
+            //         fontWeight: FontWeight.w600,
+            //         letterSpacing: -0.5,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            InkWell(
+              onTap: () => const CreateTransationDialog().show(context),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  size: 24,
                 ),
-                // InkWell(
-                //   onTap: () {},
-                //   child: Container(
-                //     padding: const EdgeInsets.all(12),
-                //     decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
-                //     child: Text(
-                //       'Categories',
-                //       style: TextStyle(
-                //         color: Theme.of(context).colorScheme.onPrimary,
-                //         fontSize: 14,
-                //         fontWeight: FontWeight.w600,
-                //         letterSpacing: -0.5,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                InkWell(
-                  onTap: () => const CreateTransationDialog().show(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
-                    child: Icon(
-                      Icons.add,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      size: 24,
-                    ),
-                  ),
-                ),
-              ],
-            ).pad(16).pOnly(bottom: MediaQuery.of(context).viewPadding.bottom),
-          ),
-        );
-      },
+              ),
+            ),
+          ],
+        ).pad(16).pOnly(bottom: MediaQuery.of(context).viewPadding.bottom),
+      ),
     );
   }
 }

@@ -50,7 +50,17 @@ class TransationsCubit extends Cubit<TransationsState> {
     final transationsMap = {
       for (final t in transations) t.id.toString(): t,
     };
-    emit(state.copyWith(transations: some(right(transationsMap))));
+    final totalIncome = transations.where((t) => t.type == TransationType.income).fold<double>(0, (sum, t) => sum + t.amount);
+    final totalExpense = transations.where((t) => t.type == TransationType.expense).fold<double>(0, (sum, t) => sum + t.amount);
+    final totalBalance = totalIncome - totalExpense;
+    emit(
+      state.copyWith(
+        transations: some(right(transationsMap)),
+        totalIncome: totalIncome,
+        totalExpense: totalExpense,
+        totalBalance: totalBalance,
+      ),
+    );
   }
 
   Future<void> addTransation(TransationEntity transation) async {
