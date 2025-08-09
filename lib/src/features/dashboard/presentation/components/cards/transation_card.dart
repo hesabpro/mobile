@@ -12,8 +12,17 @@ class TransationCard extends StatelessWidget {
       key: ValueKey(transation.id),
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
-        extentRatio: 0.15,
+        extentRatio: 0.3,
         children: [
+          SlidableAction(
+            onPressed: (context) {
+              CreateTransationDialog(transation: transation).show(context);
+            },
+            padding: EdgeInsets.zero,
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+          ),
           SlidableAction(
             onPressed: (context) {
               context.read<TransationsCubit>().deleteTransation(transation.id.toString());

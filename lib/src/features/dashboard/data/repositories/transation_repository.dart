@@ -8,7 +8,7 @@ class TransationRepositoryImpl implements TransationRepository {
   final TransationsDB transationsDB;
 
   @override
-  Future<List<TransationModel>> fetch({
+  Future<Either<AppError, List<TransationModel>>> fetch({
     DateTime? from,
     DateTime? to,
     int? categoryId,
@@ -32,11 +32,11 @@ class TransationRepositoryImpl implements TransationRepository {
       );
 
   @override
-  Future<TransationModel> insert(TransationModel transation) => transationsDB.insert(transation);
+  Future<Either<AppError, TransationModel>> insert(TransationModel transation) => transationsDB.insert(transation);
 
   @override
-  Future<int> update(TransationModel transation) => transationsDB.update(transation);
+  Future<Either<AppError, TransationModel>> update(TransationModel transation) => transationsDB.update(transation);
 
   @override
-  Future<int> delete(int id) => transationsDB.delete(id);
+  Future<Either<AppError, int>> delete(int id) => transationsDB.delete(id);
 }

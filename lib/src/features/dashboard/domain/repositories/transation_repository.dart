@@ -1,7 +1,7 @@
 import 'package:hesab/imports_bindings.dart';
 
 abstract class TransationRepository {
-  Future<List<TransationModel>> fetch({
+  Future<Either<AppError, List<TransationModel>>> fetch({
     DateTime? from,
     DateTime? to,
     int? categoryId,
@@ -13,9 +13,9 @@ abstract class TransationRepository {
     String orderBy = 'date ASC',
   });
 
-  Future<TransationModel> insert(TransationModel transation);
+  Future<Either<AppError, TransationModel>> insert(TransationModel transation);
 
-  Future<int> update(TransationModel transation);
+  Future<Either<AppError, TransationModel>> update(TransationModel transation);
 
-  Future<int> delete(int id);
+  Future<Either<AppError, int>> delete(int id);
 }

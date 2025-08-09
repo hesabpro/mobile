@@ -4,7 +4,7 @@ class UpdateTransationUseCase {
   UpdateTransationUseCase(this.repository);
   final TransationRepository repository;
 
-  Future<int> call(TransationEntity transation) async {
+  Future<Either<AppError, TransationEntity>> call(TransationEntity transation) async {
     // Convert TransationEntity to TransationModel
     final model = TransationModel(
       id: transation.id,

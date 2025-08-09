@@ -46,31 +46,38 @@ class TransationsCubit extends Cubit<TransationsState> {
       offset: offset,
       orderBy: orderBy,
     );
+
     // Use id as key (assuming TransationEntity.id is unique and int)
-    final transationsMap = {
-      for (final t in transations) t.id.toString(): t,
-    };
-    final totalIncome = transations.where((t) => t.type == TransationType.income).fold<double>(0, (sum, t) => sum + t.amount);
-    final totalExpense = transations.where((t) => t.type == TransationType.expense).fold<double>(0, (sum, t) => sum + t.amount);
-    final totalBalance = totalIncome - totalExpense;
-    emit(
-      state.copyWith(
-        transations: some(right(transationsMap)),
-        totalIncome: totalIncome,
-        totalExpense: totalExpense,
-        totalBalance: totalBalance,
-      ),
+    transations.fold(
+      (l) => emit(state.copyWith(transations: some(transations))),
+      (r) {
+        final totalIncome = r.where((t) => t.type == TransationType.income).fold<double>(0, (sum, t) => sum + t.amount);
+        final totalExpense = r.where((t) => t.type == TransationType.expense).fold<double>(0, (sum, t) => sum + t.amount);
+        final totalBalance = totalIncome - totalExpense;
+        emit(
+          state.copyWith(
+            transations: some(transations),
+            totalIncome: totalIncome,
+            totalExpense: totalExpense,
+            totalBalance: totalBalance,
+          ),
+        );
+      },
     );
   }
 
   Future<void> addTransation(TransationEntity transation) async {
-    await insertTransationUseCase(transation);
+    emit(state.copyWith(addTransation: const None()));
+    final result = await insertTransationUseCase(transation);
     await fetchTransations();
+    emit(state.copyWith(addTransation: some(result)));
   }
 
   Future<void> updateTransation(String id, TransationEntity transation) async {
-    await updateTransationUseCase(transation);
+    emit(state.copyWith(updateTransation: const None()));
+    final result = await updateTransationUseCase(transation);
     await fetchTransations();
+    emit(state.copyWith(updateTransation: some(result)));
   }
 
   Future<void> deleteTransation(String id) async {

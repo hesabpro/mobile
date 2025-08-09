@@ -119,7 +119,7 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ),
                           itemBuilder: (context, index) {
-                            return TransationCard(transation: r.values.toList()[index]);
+                            return TransationCard(transation: r[index]);
                           },
                         ),
                       ],

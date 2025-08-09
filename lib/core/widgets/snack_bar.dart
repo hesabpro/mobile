@@ -1,6 +1,23 @@
 import 'package:hesab/imports_bindings.dart';
 
-void showSnackBar(BuildContext context, String msg) {
+enum SnackBarType {
+  success,
+  error,
+  info;
+
+  Color get color {
+    switch (this) {
+      case SnackBarType.success:
+        return Colors.green;
+      case SnackBarType.error:
+        return Colors.red;
+      case SnackBarType.info:
+        return Colors.blue;
+    }
+  }
+}
+
+void showSnackBar(BuildContext context, String msg, {SnackBarType type = SnackBarType.success}) {
   final overlay = Overlay.of(context);
   final overlayEntry = OverlayEntry(
     builder: (context) => Positioned(
@@ -17,15 +34,15 @@ void showSnackBar(BuildContext context, String msg) {
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: context.color.withAlpha(25),
+                    color: type.color.withAlpha(100),
                     width: .5,
                   ),
-                  color: context.theme.scaffoldBackgroundColor,
+                  color: type.color.withAlpha(25),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   msg,
-                  style: AppStyles.text16Px.medium.copyWith(color: context.color),
+                  style: AppStyles.text16Px.medium.copyWith(color: type.color),
                   textAlign: TextAlign.center,
                 ),
               ),

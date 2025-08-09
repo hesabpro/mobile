@@ -17,7 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TransationsState {
   DateTime get selectedDate => throw _privateConstructorUsedError;
-  Option<Either<AppError, Map<String, TransationEntity>>> get transations =>
+  Option<Either<AppError, TransationEntity>>? get addTransation =>
+      throw _privateConstructorUsedError;
+  Option<Either<AppError, TransationEntity>>? get updateTransation =>
+      throw _privateConstructorUsedError;
+  Option<Either<AppError, List<TransationEntity>>> get transations =>
       throw _privateConstructorUsedError;
   double get totalIncome => throw _privateConstructorUsedError;
   double get totalExpense => throw _privateConstructorUsedError;
@@ -38,7 +42,9 @@ abstract class $TransationsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime selectedDate,
-      Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      Option<Either<AppError, TransationEntity>>? addTransation,
+      Option<Either<AppError, TransationEntity>>? updateTransation,
+      Option<Either<AppError, List<TransationEntity>>> transations,
       double totalIncome,
       double totalExpense,
       double totalBalance});
@@ -60,6 +66,8 @@ class _$TransationsStateCopyWithImpl<$Res, $Val extends TransationsState>
   @override
   $Res call({
     Object? selectedDate = null,
+    Object? addTransation = freezed,
+    Object? updateTransation = freezed,
     Object? transations = null,
     Object? totalIncome = null,
     Object? totalExpense = null,
@@ -70,10 +78,18 @@ class _$TransationsStateCopyWithImpl<$Res, $Val extends TransationsState>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      addTransation: freezed == addTransation
+          ? _value.addTransation
+          : addTransation // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AppError, TransationEntity>>?,
+      updateTransation: freezed == updateTransation
+          ? _value.updateTransation
+          : updateTransation // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AppError, TransationEntity>>?,
       transations: null == transations
           ? _value.transations
           : transations // ignore: cast_nullable_to_non_nullable
-              as Option<Either<AppError, Map<String, TransationEntity>>>,
+              as Option<Either<AppError, List<TransationEntity>>>,
       totalIncome: null == totalIncome
           ? _value.totalIncome
           : totalIncome // ignore: cast_nullable_to_non_nullable
@@ -100,7 +116,9 @@ abstract class _$$TransationsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime selectedDate,
-      Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      Option<Either<AppError, TransationEntity>>? addTransation,
+      Option<Either<AppError, TransationEntity>>? updateTransation,
+      Option<Either<AppError, List<TransationEntity>>> transations,
       double totalIncome,
       double totalExpense,
       double totalBalance});
@@ -120,6 +138,8 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedDate = null,
+    Object? addTransation = freezed,
+    Object? updateTransation = freezed,
     Object? transations = null,
     Object? totalIncome = null,
     Object? totalExpense = null,
@@ -130,10 +150,18 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      addTransation: freezed == addTransation
+          ? _value.addTransation
+          : addTransation // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AppError, TransationEntity>>?,
+      updateTransation: freezed == updateTransation
+          ? _value.updateTransation
+          : updateTransation // ignore: cast_nullable_to_non_nullable
+              as Option<Either<AppError, TransationEntity>>?,
       transations: null == transations
           ? _value.transations
           : transations // ignore: cast_nullable_to_non_nullable
-              as Option<Either<AppError, Map<String, TransationEntity>>>,
+              as Option<Either<AppError, List<TransationEntity>>>,
       totalIncome: null == totalIncome
           ? _value.totalIncome
           : totalIncome // ignore: cast_nullable_to_non_nullable
@@ -155,6 +183,8 @@ class __$$TransationsStateImplCopyWithImpl<$Res>
 class _$TransationsStateImpl implements _TransationsState {
   const _$TransationsStateImpl(
       {required this.selectedDate,
+      this.addTransation,
+      this.updateTransation,
       this.transations = const None(),
       this.totalIncome = 0,
       this.totalExpense = 0,
@@ -163,8 +193,12 @@ class _$TransationsStateImpl implements _TransationsState {
   @override
   final DateTime selectedDate;
   @override
+  final Option<Either<AppError, TransationEntity>>? addTransation;
+  @override
+  final Option<Either<AppError, TransationEntity>>? updateTransation;
+  @override
   @JsonKey()
-  final Option<Either<AppError, Map<String, TransationEntity>>> transations;
+  final Option<Either<AppError, List<TransationEntity>>> transations;
   @override
   @JsonKey()
   final double totalIncome;
@@ -177,7 +211,7 @@ class _$TransationsStateImpl implements _TransationsState {
 
   @override
   String toString() {
-    return 'TransationsState(selectedDate: $selectedDate, transations: $transations, totalIncome: $totalIncome, totalExpense: $totalExpense, totalBalance: $totalBalance)';
+    return 'TransationsState(selectedDate: $selectedDate, addTransation: $addTransation, updateTransation: $updateTransation, transations: $transations, totalIncome: $totalIncome, totalExpense: $totalExpense, totalBalance: $totalBalance)';
   }
 
   @override
@@ -187,6 +221,10 @@ class _$TransationsStateImpl implements _TransationsState {
             other is _$TransationsStateImpl &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
+            (identical(other.addTransation, addTransation) ||
+                other.addTransation == addTransation) &&
+            (identical(other.updateTransation, updateTransation) ||
+                other.updateTransation == updateTransation) &&
             (identical(other.transations, transations) ||
                 other.transations == transations) &&
             (identical(other.totalIncome, totalIncome) ||
@@ -198,8 +236,8 @@ class _$TransationsStateImpl implements _TransationsState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedDate, transations,
-      totalIncome, totalExpense, totalBalance);
+  int get hashCode => Object.hash(runtimeType, selectedDate, addTransation,
+      updateTransation, transations, totalIncome, totalExpense, totalBalance);
 
   /// Create a copy of TransationsState
   /// with the given fields replaced by the non-null parameter values.
@@ -214,7 +252,9 @@ class _$TransationsStateImpl implements _TransationsState {
 abstract class _TransationsState implements TransationsState {
   const factory _TransationsState(
       {required final DateTime selectedDate,
-      final Option<Either<AppError, Map<String, TransationEntity>>> transations,
+      final Option<Either<AppError, TransationEntity>>? addTransation,
+      final Option<Either<AppError, TransationEntity>>? updateTransation,
+      final Option<Either<AppError, List<TransationEntity>>> transations,
       final double totalIncome,
       final double totalExpense,
       final double totalBalance}) = _$TransationsStateImpl;
@@ -222,7 +262,11 @@ abstract class _TransationsState implements TransationsState {
   @override
   DateTime get selectedDate;
   @override
-  Option<Either<AppError, Map<String, TransationEntity>>> get transations;
+  Option<Either<AppError, TransationEntity>>? get addTransation;
+  @override
+  Option<Either<AppError, TransationEntity>>? get updateTransation;
+  @override
+  Option<Either<AppError, List<TransationEntity>>> get transations;
   @override
   double get totalIncome;
   @override

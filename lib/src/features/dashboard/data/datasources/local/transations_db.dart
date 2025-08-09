@@ -35,7 +35,7 @@ create table $tableName (
     );
   }
 
-  Future<List<TransationModel>> fetch({
+  Future<Either<AppError, List<TransationModel>>> fetch({
     DateTime? from,
     DateTime? to,
     int? categoryId,
@@ -77,29 +77,47 @@ create table $tableName (
       whereClauses.add('$columnType = ?');
       whereArgs.add(type.name);
     }
-    final maps = await _db.query(
-      tableName,
-      columns: [columnId, columnName, columnAmount, columnDate, columnCategoryId, columnType],
-      where: whereClauses.isNotEmpty ? whereClauses.join(' AND ') : null,
-      whereArgs: whereClauses.isNotEmpty ? whereArgs : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-    );
-    return maps.map((map) => TransationModel.fromJson(map as Map<String, dynamic>)).toList();
+    try {
+      final maps = await _db.query(
+        tableName,
+        columns: [columnId, columnName, columnAmount, columnDate, columnCategoryId, columnType],
+        where: whereClauses.isNotEmpty ? whereClauses.join(' AND ') : null,
+        whereArgs: whereClauses.isNotEmpty ? whereArgs : null,
+        limit: limit,
+        offset: offset,
+        orderBy: orderBy,
+      );
+      return right(maps.map((map) => TransationModel.fromJson(map as Map<String, dynamic>)).toList());
+    } catch (e) {
+      return left(AppError.unknown(msg: e.toString()));
+    }
   }
 
-  Future<TransationModel> insert(TransationModel transation) async {
-    final id = await _db.insert(tableName, transation.toDB);
-    return transation.copyWith(id: id);
+  Future<Either<AppError, TransationModel>> insert(TransationModel transation) async {
+    try {
+      final id = await _db.insert(tableName, transation.toDB);
+      return right(transation.copyWith(id: id));
+    } catch (e) {
+      return left(AppError.unknown(msg: e.toString()));
+    }
   }
 
-  Future<int> update(TransationModel transation) async {
-    return _db.update(tableName, transation.toDB, where: '$columnId = ?', whereArgs: [transation.id]);
+  Future<Either<AppError, TransationModel>> update(TransationModel transation) async {
+    try {
+      final id = await _db.update(tableName, transation.toDB, where: '$columnId = ?', whereArgs: [transation.id]);
+      return right(transation.copyWith(id: id));
+    } catch (e) {
+      return left(AppError.unknown(msg: e.toString()));
+    }
   }
 
-  Future<int> delete(int id) async {
-    return _db.delete(tableName, where: '$columnId = ?', whereArgs: [id]);
+  Future<Either<AppError, int>> delete(int id) async {
+    try {
+      final count = await _db.delete(tableName, where: '$columnId = ?', whereArgs: [id]);
+      return right(count);
+    } catch (e) {
+      return left(AppError.unknown(msg: e.toString()));
+    }
   }
 
   Future<void> close() async => _db.close();

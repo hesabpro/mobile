@@ -4,7 +4,7 @@ class FetchTransationsUseCase {
   FetchTransationsUseCase(this.repository);
   final TransationRepository repository;
 
-  Future<List<TransationEntity>> call({
+  Future<Either<AppError, List<TransationEntity>>> call({
     DateTime? from,
     DateTime? to,
     int? categoryId,
