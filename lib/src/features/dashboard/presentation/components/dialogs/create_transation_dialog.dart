@@ -206,6 +206,7 @@ class _CreateTransationDialogState extends State<CreateTransationDialog> {
                         if (amount.isEmpty) 'Amount is required.',
                         if (_selectedDate == null) 'Date is required.',
                       ].join(' '),
+                      type: SnackBarType.error,
                     );
                     return;
                   }
