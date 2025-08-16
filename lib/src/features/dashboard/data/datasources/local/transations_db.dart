@@ -83,7 +83,7 @@ create table $tableName (
         columns: [columnId, columnName, columnAmount, columnDate, columnCategoryId, columnType],
         where: whereClauses.isNotEmpty ? whereClauses.join(' AND ') : null,
         whereArgs: whereClauses.isNotEmpty ? whereArgs : null,
-        limit: limit,
+        // limit: limit,
         offset: offset,
         orderBy: orderBy,
       );
