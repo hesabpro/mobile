@@ -3,7 +3,7 @@ import 'package:hesab/imports_bindings.dart';
 part 'transations_state.dart';
 part 'transations_cubit.freezed.dart';
 
-class TransationsCubit extends Cubit<TransationsState> {
+class TransationsCubit extends HydratedCubit<TransationsState> {
   TransationsCubit({
     required this.fetchTransationsUseCase,
     required this.insertTransationUseCase,
@@ -23,6 +23,26 @@ class TransationsCubit extends Cubit<TransationsState> {
       return;
     }
     fetchTransations();
+  }
+
+  void changeToNextMonth() {
+    setSelectedDate(
+      DateTime(
+        state.selectedDate.year,
+        state.selectedDate.month + 1,
+        state.selectedDate.day,
+      ),
+    );
+  }
+
+  void changeToPreviousMonth() {
+    setSelectedDate(
+      DateTime(
+        state.selectedDate.year,
+        state.selectedDate.month - 1,
+        state.selectedDate.day,
+      ),
+    );
   }
 
   Future<void> fetchTransations({
@@ -86,5 +106,21 @@ class TransationsCubit extends Cubit<TransationsState> {
       await deleteTransationUseCase(intId);
     }
     await fetchTransations();
+  }
+
+  @override
+  TransationsState? fromJson(Map<String, dynamic> json) {
+    final selectedDateInString = json['selected_date'] as String?;
+    final selectedDate = selectedDateInString != null ? DateTime.parse(selectedDateInString) : DateTime.now();
+    return TransationsState(
+      selectedDate: selectedDate,
+    );
+  }
+
+  @override
+  Map<String, dynamic>? toJson(TransationsState state) {
+    return {
+      'selected_date': state.selectedDate.toIso8601String(),
+    };
   }
 }

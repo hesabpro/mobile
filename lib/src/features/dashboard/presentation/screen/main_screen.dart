@@ -134,65 +134,121 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BlurredCard(
         borderRadius: BorderRadius.zero,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 4,
           children: [
             BlocBuilder<TransationsCubit, TransationsState>(
               buildWhen: (previous, current) => previous.selectedDate != current.selectedDate,
               builder: (context, state) {
-                return InkWell(
-                  onTap: () async {
-                    final now = DateTime.now();
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: state.selectedDate,
-                      firstDate: DateTime(now.year - 5),
-                      lastDate: DateTime(now.year + 5),
-                    );
-                    if (picked != null && context.mounted) {
-                      context.read<TransationsCubit>().setSelectedDate(picked);
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
-                    child: Text(
-                      DateFormat.yMMMMEEEEd().format(state.selectedDate.toLocal()),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.5,
+                return Tooltip(
+                  message: 'Change selected date',
+                  child: InkWell(
+                    onTap: () async {
+                      final now = DateTime.now();
+                      final picked = await showDatePicker(
+                        context: context,
+                        initialDate: state.selectedDate,
+                        firstDate: DateTime(now.year - 5),
+                        lastDate: DateTime(now.year + 5),
+                      );
+                      if (picked != null && context.mounted) {
+                        context.read<TransationsCubit>().setSelectedDate(picked);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                      child: Text(
+                        DateFormat('MMM yyyy').format(state.selectedDate.toLocal()),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.5,
+                        ),
                       ),
                     ),
                   ),
                 );
               },
             ),
-            // InkWell(
-            //   onTap: () {},
-            //   child: Container(
-            //     padding: const EdgeInsets.all(12),
-            //     decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
-            //     child: Text(
-            //       'Categories',
-            //       style: TextStyle(
-            //         color: Theme.of(context).colorScheme.onPrimary,
-            //         fontSize: 14,
-            //         fontWeight: FontWeight.w600,
-            //         letterSpacing: -0.5,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            InkWell(
-              onTap: () => const CreateTransationDialog().show(context),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  size: 24,
+            Tooltip(
+              message: 'Change to previous month',
+              child: InkWell(
+                onTap: context.read<TransationsCubit>().changeToPreviousMonth,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ),
+            Tooltip(
+              message: 'Change to next month',
+              child: InkWell(
+                onTap: context.read<TransationsCubit>().changeToNextMonth,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                  child: Icon(
+                    Icons.arrow_upward,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+            BlocBuilder<TransationsCubit, TransationsState>(
+              buildWhen: (previous, current) => previous.selectedDate != current.selectedDate,
+              builder: (context, state) {
+                return Tooltip(
+                  message: 'Change selected date',
+                  child: InkWell(
+                    onTap: () async {
+                      final now = DateTime.now();
+                      final picked = await showDatePicker(
+                        context: context,
+                        initialDate: state.selectedDate,
+                        firstDate: DateTime(now.year - 5),
+                        lastDate: DateTime(now.year + 5),
+                      );
+                      if (picked != null && context.mounted) {
+                        context.read<TransationsCubit>().setSelectedDate(picked);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                      child: Text(
+                        DateFormat('EEE d').format(state.selectedDate.toLocal()),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Tooltip(
+              message: 'Create new transation',
+              child: InkWell(
+                onTap: () => const CreateTransationDialog().show(context),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                  child: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    size: 24,
+                  ),
                 ),
               ),
             ),
